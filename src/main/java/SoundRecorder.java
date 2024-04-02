@@ -81,6 +81,8 @@ public class SoundRecorder implements Runnable {
     }
 
     public AudioInputStream convertToAudioIStream(final ByteArrayOutputStream out, int frameSizeInBytes) {
+        // попытка добавить усилитель (неудачная)
+        // TODO: узнать как работает обработка звуковых сигналов
         Amplifier amp = new Amplifier(out);
         if (amplify_value != 0)
             amp.amp_volume(amplify_value);
