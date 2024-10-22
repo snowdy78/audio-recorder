@@ -1,3 +1,5 @@
+package audio;
+
 import java.io.File;
 
 import javax.sound.sampled.AudioFileFormat;
@@ -5,7 +7,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
 public class WaveDataUtil {
-    static boolean saveToFile(String name, AudioInputStream audioInputStream) {
+    public static boolean saveToFile(String name, AudioInputStream audioInputStream) {
         var fileType = AudioFileFormat.Type.WAVE;
         System.out.println("Saving...");
         if (name == null || audioInputStream == null) {

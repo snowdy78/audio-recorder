@@ -1,3 +1,4 @@
+package audio;
 
 import javax.sound.midi.*;
 
@@ -17,7 +18,7 @@ public class MidiHandler {
                 for (Transmitter transmitter : device.getTransmitters()) {
                     //create a new receiver
                     transmitter.setReceiver(
-                            //using my own MidiInputReceiver
+                            //using my own audio.MidiInputReceiver
                             new MidiInputReceiver(device.getDeviceInfo().toString())
                     );
                 }

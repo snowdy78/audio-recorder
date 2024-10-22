@@ -1,3 +1,5 @@
+package audio;
+
 import java.io.ByteArrayOutputStream;
 
 public class Amplifier {
