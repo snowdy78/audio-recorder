@@ -3,20 +3,19 @@ import audio.*;
 import AppButtons.*;
 import javax.sound.sampled.*;
 import java.awt.*;
-import java.util.ArrayList;
 import javax.swing.*;
 
 public class Main {
 
-    public static AudioFormat wav_format = new AudioFormat(44100, 16, 2, true, true);
-    public static SoundRecorder recorder = new SoundRecorder(wav_format);
-    public static Mixer.Info[] infos = new MixerData(wav_format).getMixers().clone();
-    public static JComboBox<Mixer.Info> mixerList = new JComboBox<>(infos);
-    public static Font font = Font.getFont("Arial");
-    public static JTextArea text_field = new JTextArea();
-    public static Integer[] amps = getAmps();
-    public static JComboBox<Integer> amp_text = new JComboBox<>(amps);
-    public static JFrame frame = new JFrame("MyWindow");
+    public static final AudioFormat wav_format = new AudioFormat(44100, 16, 2, true, true);
+    public static final SoundRecorder recorder = new SoundRecorder(wav_format);
+    public static final Mixer.Info[] infos = new MixerData(wav_format).getMixers().clone();
+    public static final JComboBox<Mixer.Info> mixerList = new JComboBox<>(infos);
+    public static final Font font = Font.getFont("Arial");
+    public static final JTextArea text_field = new JTextArea();
+    public static final Integer[] amps = getAmps();
+    public static final JComboBox<Integer> amp_text = new JComboBox<>(amps);
+    public static final JFrame frame = new JFrame("MyWindow");
 
     // Buttons
     public static AppButton[] buttons = new AppButton[] {
