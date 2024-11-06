@@ -9,7 +9,8 @@ public class SoundRecorder implements Runnable {
     private boolean is_recording = false;
     public Thread thread;
     private double duration;
-    private int amplify_value = 1;
+    private float gain = 0.f;
+    private float volume = 0.f;
     private Mixer.Info info = null;
     public SoundRecorder(AudioFormat format) {
 
@@ -48,6 +49,10 @@ public class SoundRecorder implements Runnable {
         duration = 0;
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final TargetDataLine line = getTargetDataLineForRecord();
+        var gain_control = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
+        var volume_control = (FloatControl) line.getControl(FloatControl.Type.VOLUME);
+        gain_control.setValue(gain); // throws errror IllegalArgumentException
+        volume_control.setValue(volume);
         if (line != null) {
             try {
                 int frameSizeInBytes = format.getFrameSize();
@@ -73,22 +78,25 @@ public class SoundRecorder implements Runnable {
             out.write(data, 0, numBytesRead);
         }
     }
-
+    public float getGain() {
+        return gain;
+    }
+    public void setGain(float new_gain) {
+        gain = new_gain;
+    }
+    public float getVolume() {
+        return volume;
+    }
+    public void setVolume(float new_volume) {
+        new_volume = new_volume;
+    }
     private void setAudioInputStream(AudioInputStream aStream) {
         this.audioInputStream = aStream;
     }
-    public void setAmplify(int value) {
-        amplify_value=value;
-    }
-
     public AudioInputStream convertToAudioIStream(final ByteArrayOutputStream out, int frameSizeInBytes) {
-        // попытка добавить усилитель (неудачная)
-        // TODO: узнать как работает обработка звуковых сигналов
-        Amplifier amp = new Amplifier(out);
-        if (amplify_value != 0)
-            amp.amp_volume(amplify_value);
-        ByteArrayInputStream bais = new ByteArrayInputStream(amp.getByteArray());
-        AudioInputStream audioStream = new AudioInputStream(bais, format, amp.getByteArray().length / frameSizeInBytes);
+        final byte[] buff = out.toByteArray();
+        ByteArrayInputStream bais = new ByteArrayInputStream(buff);
+        AudioInputStream audioStream = new AudioInputStream(bais, format, buff.length / frameSizeInBytes);
         long milliseconds = (long) ((audioStream.getFrameLength() * 1000) / format.getFrameRate());
         duration = milliseconds / 1000.0;
         System.out.println("duration: " + duration);

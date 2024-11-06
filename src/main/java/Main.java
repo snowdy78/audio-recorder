@@ -21,7 +21,7 @@ public class Main {
     public static AppButton[] buttons = new AppButton[] {
             new RecButton(recorder, mixerList),
             new StopButton(recorder),
-            new AmplifierButton(),
+            new AmplifierButton(recorder),
             new SaveButton(recorder, () -> text_field.getText()),
     };
     public static JPanel panel = new JPanel(new GridLayout(4, 4, 4, 4));
@@ -39,7 +39,7 @@ public class Main {
         text_field.setFont(font);
         text_field.setLineWrap(true);
         text_field.setPreferredSize(new Dimension(60, 25));
-
+        
         Component[] components = new Component[] {
                 mixerList,
                 text_field,
